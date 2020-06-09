@@ -3,10 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
+
+    // TODO Fix: audio keeps running after death
     Rigidbody rigidBody;
     AudioSource engineAudio;
     [SerializeField] float rcsThrust;
     [SerializeField] float mainThrust;
+
+    enum State { Alive, Dying, Transcending }
+    [SerializeField] State state;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,30 +19,47 @@ public class Rocket : MonoBehaviour
         engineAudio = GetComponent<AudioSource>();
         rcsThrust   = 150f;
         mainThrust  = 30f;
+        state = State.Alive;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Thrust();
-        Rotate();
+        if (state == State.Alive)
+        {
+            Thrust();
+            Rotate();
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (state != State.Alive) 
+            return;
+
         switch (collision.gameObject.tag)
         {
             case "Friendly":
                 break;
             case "Finish":
-                print("Level finished");
-                SceneManager.LoadScene(1);
+                state = State.Transcending;
+                Invoke("LoadNextLevel", 1.5f);
                 break;
             default:
-                print("dead"); // remove and add more logic
-                SceneManager.LoadScene(0);
+                state = State.Dying;
+                Invoke("LoadFirstLevel", 1.5f);
                 break;
         }
+    }
+
+    private void LoadFirstLevel()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    private void LoadNextLevel()
+    {
+        SceneManager.LoadScene(1); // TODO should keep current level and load currentLevel+1
     }
 
     private void Thrust()
