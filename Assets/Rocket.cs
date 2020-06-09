@@ -13,8 +13,8 @@ public class Rocket : MonoBehaviour
     {
         rigidBody   = GetComponent<Rigidbody>();
         engineAudio = GetComponent<AudioSource>();
-        rcsThrust   = 100f;
-        mainThrust  = 25f;
+        rcsThrust   = 150f;
+        mainThrust  = 30f;
     }
 
     // Update is called once per frame
