@@ -6,31 +6,46 @@ public class Rocket : MonoBehaviour
 {
     Rigidbody rigidBody;
     AudioSource engineAudio;
+    [SerializeField] float rcsThrust;
+    [SerializeField] float mainThrust;
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
+        rigidBody   = GetComponent<Rigidbody>();
         engineAudio = GetComponent<AudioSource>();
+        rcsThrust   = 100f;
+        mainThrust  = 25f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Thrust();
+        Rotate();
+    }
+
+    private void Thrust()
+    {
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidBody.AddRelativeForce(Vector3.up);
+            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
             if (!engineAudio.isPlaying)
                 engineAudio.Play();
         }
-        else 
-        {
+        else
             engineAudio.Stop();
-        }
+    }
 
+    private void Rotate()
+    {
+        rigidBody.freezeRotation = true; // Taking control of rocket.
+        float rotationThisFrame = rcsThrust * Time.deltaTime;
         if (Input.GetKey(KeyCode.A))
-            transform.Rotate(Vector3.forward);
+            transform.Rotate(Vector3.forward * rotationThisFrame);
 
         else if (Input.GetKey(KeyCode.D))
-            transform.Rotate(-Vector3.forward);
+            transform.Rotate(-Vector3.forward * rotationThisFrame);
+        
+        rigidBody.freezeRotation = false; // Resume normal physics control.
     }
 }
