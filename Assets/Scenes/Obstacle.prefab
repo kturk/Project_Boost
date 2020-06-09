@@ -15,12 +15,17 @@ PrefabInstance:
     - target: {fileID: 5334820367800743785, guid: 8c769734de61d7248a3d16249d5dcca6,
         type: 3}
       propertyPath: m_Name
-      value: Obstacle
+      value: Obstacle (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334820367800743785, guid: 8c769734de61d7248a3d16249d5dcca6,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 9114744458139750750, guid: 8c769734de61d7248a3d16249d5dcca6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.54
+      value: 16.5
       objectReference: {fileID: 0}
     - target: {fileID: 9114744458139750750, guid: 8c769734de61d7248a3d16249d5dcca6,
         type: 3}
