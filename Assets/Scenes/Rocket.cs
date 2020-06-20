@@ -25,8 +25,8 @@ public class Rocket : MonoBehaviour
     {
         rigidBody   = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        rcsThrust   = 150f;
-        mainThrust  = 300f;
+        rcsThrust   = 250f;
+        mainThrust  = 1000f;
         levelLoadDelay = 1.5f;
         state = State.Alive;
     }
